@@ -13,40 +13,40 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         DB::table('brands')->insert([
-            ['name'=> str_random(10) ],
-            ['name'=> str_random(10) ],
-            ['name'=> str_random(10) ]
+            ['name'=> 'Adidas' ],
+            ['name'=> 'Nikes' ],
+            ['name'=> 'Puma' ]
         ]);
         DB::table('products')->insert([
             [
-                'name'=> str_random(10),
+                'name'=> str_random(5),
                 'image'=> str_random(10),
                 'price'=> '100000',
                 'color'=> str_random(5),
                 'size'=> '30',
                 'gender'=> 'Nam',
                 'id_brand'=> '1',
-                'description'=> str_random(100)
+                'description'=> str_random(30)
             ],
             [
-                'name'=> str_random(10),
+                'name'=> str_random(5),
                 'image'=> str_random(10),
                 'price'=> '100000',
                 'color'=> str_random(5),
                 'size'=> '30',
                 'gender'=> 'Nam',
-                'id_brand'=> '1',
-                'description'=> str_random(100)
+                'id_brand'=> '2',
+                'description'=> str_random(30)
             ],
             [
-                'name'=> str_random(10),
+                'name'=> str_random(5),
                 'image'=> str_random(10),
                 'price'=> '100000',
                 'color'=> str_random(5),
                 'size'=> '30',
                 'gender'=> 'Nam',
-                'id_brand'=> '1',
-                'description'=> str_random(100)
+                'id_brand'=> '3',
+                'description'=> str_random(30)
             ],
         ]);
     }

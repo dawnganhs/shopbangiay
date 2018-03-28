@@ -10,7 +10,7 @@ class Product extends Model
         'name', 'image', 'price', 'color', 'size', 'gender', 'description', 'brand_id'
     ];
 
-    public function brand(){
+    public function brands(){
         return $this->belongsTo('App\Brand', 'brand_id');
     }
     public function order_details(){

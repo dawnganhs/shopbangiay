@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Brand;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::get();
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -24,7 +26,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::get();
+        $brands = Brand::get();
+        return view('admin.products.create', compact('products','brands'));
     }
 
     /**
@@ -35,7 +39,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $products = New Product;
+        $products->name = request()->input('name');
+        $products->price = request()->input('price');
+        $products->color = request()->input('color');
+        $products->size = request()->input('size');
+        $products->gender = request()->input('gender');
+        $products->description = request()->input('description');
+        if($request->hasFile('image'))
+        {
+            $file = $request->file('image');
+            $file->move('./images',$file->getClientOriginalName('image'));
+        }
+        $image = $file->getClientOriginalName('image');
+        $products->image = $image;
+        $products->id_brand = request()->input('brand');
+        $products->save();
+        return redirect('/listproducts');
     }
 
     /**
@@ -55,9 +75,11 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $products = Product::find($id);
+        $brands = Brand::get();
+        return view('admin.products.edit', ['products'=>$products, 'brands'=>$brands]);
     }
 
     /**
@@ -67,9 +89,23 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);  
+        $inputs = $request->all();
+        $product->update($inputs);
+        $file ;
+        // dd($inputs['image']);
+        if($request->hasFile('image'))
+        {
+            $file = $request->file('image');
+            $file->move('./images',$file->getClientOriginalName('image'));
+        }
+        $image = $file->getClientOriginalName('image');
+        // dd($image   );
+        $product->image = $image;
+        $product->save();
+        return redirect('/listproducts');
     }
 
     /**
@@ -78,8 +114,11 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $products = Product::find($id);
+        $products->delete();
+
+        return redirect('/listproducts');
     }
 }

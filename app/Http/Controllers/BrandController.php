@@ -14,7 +14,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::get();
+        return view('/admin.brands.index', compact('brands'));
     }
 
     /**
@@ -24,7 +25,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('/admin.brands.create');
     }
 
     /**
@@ -35,7 +36,11 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $brand = New Brand;
+        $brand->name = request()->input('name');
+        $brand->save();
+        
+        return redirect('/listbrands');
     }
 
     /**
@@ -78,8 +83,11 @@ class BrandController extends Controller
      * @param  \App\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        //
+        $brands = Brand::find($id);
+        $brands->delete();
+
+        return redirect('/listbrands');
     }
 }
